@@ -12,35 +12,41 @@ interface Exporter {
   risk_note: string
 }
 
-const riskColors: Record<string, string> = {
-  high: 'bg-red-100 text-red-800',
-  medium: 'bg-yellow-100 text-yellow-800',
-  low: 'bg-green-100 text-green-800',
+const riskBadgeStyles: Record<string, string> = {
+  high: 'bg-red-500/10 text-red-600 ring-1 ring-inset ring-red-500/20',
+  medium: 'bg-yellow-500/10 text-yellow-700 ring-1 ring-inset ring-yellow-500/20',
+  low: 'bg-green-500/10 text-green-600 ring-1 ring-inset ring-green-500/20',
 }
 
 export default function ExporterCard({ exporter, locale }: { exporter: Exporter; locale: string }) {
   return (
-    <Link href={`/${locale}/exporter/${exporter.slug}`} className="block bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow space-y-2">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{exporter.flag}</span>
-          <span className="font-semibold text-gray-900">{exporter.name}</span>
+    <Link href={`/${locale}/exporter/${exporter.slug}`} className="block group">
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-5">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">{exporter.flag}</span>
+            <span className="font-bold text-slate-900 group-hover:text-green-700 transition-colors">{exporter.name}</span>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${riskBadgeStyles[exporter.conflict_risk] || 'bg-slate-500/10 text-slate-600 ring-1 ring-inset ring-slate-500/20'}`}>
+              {exporter.conflict_risk} risk
+            </span>
+            {exporter.active_conflict && (
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-600 ring-1 ring-inset ring-red-500/20">
+                ⚠ Active Conflict
+              </span>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${riskColors[exporter.conflict_risk] || 'bg-gray-100'}`}>
-            {exporter.conflict_risk} risk
-          </span>
-          {exporter.active_conflict && (
-            <span className="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded-full">⚠ Active Conflict</span>
-          )}
+
+        <div className="flex flex-wrap gap-1 mb-3">
+          {exporter.commodities_exported.slice(0, 3).map(c => (
+            <span key={c} className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">{c}</span>
+          ))}
         </div>
+
+        <p className="text-xs text-slate-500 line-clamp-2">{exporter.risk_note}</p>
       </div>
-      <div className="flex flex-wrap gap-1">
-        {exporter.commodities_exported.slice(0, 3).map(c => (
-          <span key={c} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">{c}</span>
-        ))}
-      </div>
-      <p className="text-xs text-gray-500 line-clamp-2">{exporter.risk_note}</p>
     </Link>
   )
 }
