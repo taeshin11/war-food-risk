@@ -1,0 +1,8 @@
+{
+  "site": { "title": "War Food Risk", "description": "Conflict pressure on food supply - commodity prices and exporter country risk" },
+  "nav": { "home": "Home", "events": "Events", "about": "About" },
+  "home": { "heading": "War Food Risk Monitor", "subheading": "How conflicts drive global food price volatility and supply disruptions" },
+  "commodity": { "current": "Current Price", "peak": "Conflict Peak", "change1m": "1M Change", "impact": "Conflict Impact", "exporters": "Major Exporters" },
+  "exporter": { "risk": "Conflict Risk", "active": "Active Conflict", "commodities": "Exports" },
+  "footer": { "disclaimer": "For research purposes only. Not financial advice." }
+}
