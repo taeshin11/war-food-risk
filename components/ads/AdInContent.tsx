@@ -1,7 +1,20 @@
+'use client'
+import { useEffect, useRef } from 'react'
+
 export default function AdInContent() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!ref.current || ref.current.dataset.loaded) return
+    ref.current.dataset.loaded = '1'
+    const s = document.createElement('script')
+    s.src = 'https://pl29155481.profitablecpmratenetwork.com/28495b9d782a8f5f4e18375c7e0c7cec/invoke.js'
+    s.async = true
+    s.setAttribute('data-cfasync', 'false')
+    ref.current.appendChild(s)
+  }, [])
   return (
-    <div className="flex justify-center my-6">
-      <div className="w-[468px] h-[60px] bg-gray-200 flex items-center justify-center text-gray-400 text-sm rounded">468×60 Advertisement</div>
+    <div className="w-full my-4">
+      <div id="container-28495b9d782a8f5f4e18375c7e0c7cec" ref={ref} />
     </div>
   )
 }

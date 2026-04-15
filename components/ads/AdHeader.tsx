@@ -1,8 +1,26 @@
+'use client'
+import { useEffect, useRef } from 'react'
+
 export default function AdHeader() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!ref.current || ref.current.dataset.loaded) return
+    ref.current.dataset.loaded = '1'
+    ;(window as any).atOptions = {
+      key: 'a93bd74bc644a7294796e0d8af806f13',
+      format: 'iframe',
+      height: 90,
+      width: 728,
+      params: {}
+    }
+    const s = document.createElement('script')
+    s.src = 'https://www.highperformanceformat.com/a93bd74bc644a7294796e0d8af806f13/invoke.js'
+    s.async = true
+    ref.current.appendChild(s)
+  }, [])
   return (
-    <div className="flex justify-center items-center my-2">
-      <div className="hidden md:flex w-[728px] h-[90px] bg-gray-200 items-center justify-center text-gray-400 text-sm rounded">728×90 Advertisement</div>
-      <div className="flex md:hidden w-[320px] h-[50px] bg-gray-200 items-center justify-center text-gray-400 text-sm rounded">320×50 Advertisement</div>
+    <div className="w-full flex justify-center py-2 bg-gray-50 border-b border-gray-100">
+      <div ref={ref} className="min-h-[90px] flex items-center justify-center" />
     </div>
   )
 }
